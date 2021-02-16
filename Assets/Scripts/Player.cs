@@ -9,13 +9,24 @@ public class Player : MonoBehaviour
     public bool isTouchLeft;
     public bool isTouchRight;
 
+    public int hp;
+    public int score;
     public float speed;
-    public float power;
+    public int maxPower;
+    public int power;
+    public int maxBoom;
+    public int boom;
+
     public float maxShotDelay;
     public float curShotDelay;
 
     public GameObject bulletObjA;
     public GameObject bulletObjB;
+    public GameObject boomEffect;
+
+    public GameManager manager;
+    public bool isHit;
+    public bool isBoomTime;
 
     Animator anim;
 
@@ -27,6 +38,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Fire();
+        Boom();
         Reload();
     }
 
@@ -97,11 +109,44 @@ public class Player : MonoBehaviour
                 Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>();
                 rigidLL.AddForce(Vector2.up*10, ForceMode2D.Impulse);
                 break;
-
         }
 
-
         curShotDelay = 0;
+    }
+
+    void Boom(){
+
+        if(Input.GetButton("Fire1")){
+
+            if(isBoomTime)
+                return;
+        
+            if(boom == 0)
+                return;
+
+            boom--;
+            isBoomTime = true;
+            manager.UpdateBoomIcon(boom);
+
+            // #1.Effect visible
+            boomEffect.SetActive(true);
+            Invoke("OffBoomEffect", 4f);
+
+            // #2.Remove Enemy
+                // FindGameObjectWithTag : 태그로 장면의 모든 오브젝트를 추출
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for(int i = 0; i < enemies.Length; i++){
+                Enemy enemyLogic = enemies[i].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+
+            // #3.Remove Enemy Bullet
+            GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
+            for(int i = 0; i < bullets.Length; i++){
+                Destroy(bullets[i]);
+            }
+   
+        }
     }
 
     void Reload(){
@@ -124,7 +169,52 @@ public class Player : MonoBehaviour
                     isTouchRight = true;
                     break;
             }
+        }else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet"){
+            
+            if(isHit)
+                return;
+
+            isHit = true;
+
+            hp--;
+            manager.UpdateHpIcon(hp);
+            if(hp == 0){
+                manager.GameOver();
+            }else{
+                manager.RespawnPlayer();
+            }
+            gameObject.SetActive(false);
+            Destroy(collision.gameObject);
+
+        }else if(collision.gameObject.tag == "Item"){
+            Item item = collision.gameObject.GetComponent<Item>();
+            switch(item.type){
+                case "Coin":
+                    score += 1000;
+                    break;
+                case "Power":
+                    if(maxPower <= power)
+                        score += 500;
+                    else
+                        power++;
+                    break;
+                case "Boom":
+                    if(maxBoom <= boom){
+                        score += 500;
+                    }else{
+                        boom++;
+                        manager.UpdateBoomIcon(boom);
+                    }
+                    break;
+            }
+            Destroy(collision.gameObject);
         }
+    }
+
+    // Boom Disable
+    void OffBoomEffect(){
+        boomEffect.SetActive(false);
+        isBoomTime = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision){
