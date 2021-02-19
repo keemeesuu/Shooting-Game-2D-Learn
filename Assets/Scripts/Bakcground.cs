@@ -14,8 +14,6 @@ public class Bakcground : MonoBehaviour
     void Awake(){
         // 카메라 높이 구하는방법 orthographicSize : orthographic 카메라 Size
         viewHeight = Camera.main.orthographicSize * 2;
-
-        // Debug.Log(sprites[endIndex].position.y);
     }
     
     void Update() 
