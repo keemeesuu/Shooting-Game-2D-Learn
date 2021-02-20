@@ -17,6 +17,7 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletPlayerBPrefab;
     public GameObject bulletEnemyAPrefab;
     public GameObject bulletEnemyBPrefab;
+    public GameObject bulletFollowerPrefab;
 
     // 프리펩을 생성하여 저장할 배열 변수 생성
     GameObject[] enemyL;
@@ -31,6 +32,7 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletPlayerB;
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
+    GameObject[] bulletFollower;
 
     GameObject[] targetPool;
 
@@ -52,6 +54,7 @@ public class ObjectManager : MonoBehaviour
         bulletPlayerB = new GameObject[100];
         bulletEnemyA = new GameObject[100];
         bulletEnemyB = new GameObject[100];
+        bulletFollower = new GameObject[100];
 
         Generate();
     }
@@ -103,6 +106,10 @@ public class ObjectManager : MonoBehaviour
             bulletEnemyB[i] = Instantiate(bulletEnemyBPrefab);
             bulletEnemyB[i].SetActive(false);
         }
+        for(int i=0; i<bulletFollower.Length; i++){
+            bulletFollower[i] = Instantiate(bulletFollowerPrefab);
+            bulletFollower[i].SetActive(false);
+        }
         
     }
 
@@ -139,6 +146,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
+                break;
+            case "BulletFollower":
+                targetPool = bulletFollower;
                 break;
         }
 
@@ -184,8 +194,8 @@ public class ObjectManager : MonoBehaviour
             case "BulletEnemyA":
                 targetPool = bulletEnemyA;
                 break;
-            case "BulletEnemyB":
-                targetPool = bulletEnemyB;
+            case "BulletFollower":
+                targetPool = bulletFollower;
                 break;
         }
         

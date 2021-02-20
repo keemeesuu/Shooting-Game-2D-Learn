@@ -29,27 +29,27 @@ public class Follower : MonoBehaviour
     void Watch(){
         // Queue = FIFO(First Input First Out) 먼저 입력된 데이터가 먼저 나가는 자료구조
 
-        // #.Input Pos
-        // 움직일때마다 포지션값이 변경됨으로 요소여부확인(Contains)이 된다.
+        // #.Input Position
+        // 부모와 딱 안붙고 거리를 유지하고 싶을때.
+        // 부모 위치가 가만히 있으면 저장하지 않도록 조건 추가.
+        // 만약 플레이어가 가만히 있는다면은 더이상 집어넣지 말자.
+        // Contains함수로 지금 플레이어의 위치를 확인해서 같지 않을경우에만 실행시킨다.
         if(!parentPos.Contains(parent.position)){
-            parentPos.Enqueue(parent.position);
-                // Enqueue() : 큐에 데이터 저장하는 함수
-
-            // Debug.Log(parentPos.Count);
+            parentPos.Enqueue(parent.position); // 부모가 움직일때마다 부모 포지션값 저장
         }
-        
-        // Debug.Log(parentPos.Count + ", " + followDelay);
-        
-        // #.Output Pos
-        // 큐에 일정 데이터 갯수가 채워지면 그 때부터 반환하도록 작성
-        // 딜레이만큼 이전 프레임 위치를 보조무기에 적용
+
+
+        // #.Output Position
+        // 큐에 설정한 딜레이 값 만큼의 데이터 갯수가 채워지면 그 때부터 반환
+        // 딜레이만큼 이전 프레임 위치를 자식오브젝트에 적용
         if(parentPos.Count > followDelay){
             followPos = parentPos.Dequeue();
-                // Dequeue() : 큐의 첫 데이터를 빼면서 반환하는 함수
-        }else if(parentPos.Count < followDelay){
-            // 큐가 채워지기 전까진 부모 위치 적용
+        }
+        // 큐가 딜레이 값 이상으로 채워지기 전까지는 부모 위치값
+        else if(parentPos.Count < followDelay){
             followPos = parent.position;
         }
+        
     }
 
     void Follow(){

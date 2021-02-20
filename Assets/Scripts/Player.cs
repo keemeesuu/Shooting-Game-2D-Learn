@@ -20,14 +20,16 @@ public class Player : MonoBehaviour
     public float maxShotDelay;
     public float curShotDelay;
 
-    public GameObject bulletObjA;
-    public GameObject bulletObjB;
+    // public GameObject bulletObjA;
+    // public GameObject bulletObjB;
     public GameObject boomEffect;
 
     public GameManager gameManager;
     public ObjectManager objectManager;
     public bool isHit;
     public bool isBoomTime;
+
+    public GameObject[] followers;
 
     Animator anim;
 
@@ -105,7 +107,7 @@ public class Player : MonoBehaviour
                 rigidL.AddForce(Vector2.up*10, ForceMode2D.Impulse);
 
                 break;
-            case 3:
+            default:
                 GameObject bulletRR = objectManager.MakeObj("BulletPlayerA");
                 bulletRR.transform.position = transform.position+Vector3.right * 0.4f;
                 GameObject bulletCC = objectManager.MakeObj("BulletPlayerB");
@@ -234,8 +236,10 @@ public class Player : MonoBehaviour
                 case "Power":
                     if(maxPower <= power)
                         score += 500;
-                    else
+                    else {
                         power++;
+                        AddFollower();
+                    }
                     break;
                 case "Boom":
                     if(maxBoom <= boom){
@@ -248,6 +252,16 @@ public class Player : MonoBehaviour
             }
             // Destroy(collision.gameObject);
             collision.gameObject.SetActive(false);
+        }
+    }
+
+    void AddFollower(){
+        if(power == 4){
+            followers[0].SetActive(true);
+        }else if(power == 5){
+            followers[1].SetActive(true);
+        }else if(power == 6){
+            followers[2].SetActive(true);
         }
     }
 
