@@ -38,7 +38,6 @@ public class Follower : MonoBehaviour
             parentPos.Enqueue(parent.position); // 부모가 움직일때마다 부모 포지션값 저장
         }
 
-
         // #.Output Position
         // 큐에 설정한 딜레이 값 만큼의 데이터 갯수가 채워지면 그 때부터 반환
         // 딜레이만큼 이전 프레임 위치를 자식오브젝트에 적용

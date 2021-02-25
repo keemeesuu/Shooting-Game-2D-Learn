@@ -1246,7 +1246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728815183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1805942912}
@@ -1889,7 +1889,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275759044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1805942912}
@@ -3405,6 +3405,8 @@ MonoBehaviour:
     type: 3}
   enemySPrefab: {fileID: 1315447961125531409, guid: e7941790c6f4f457392e2ad003f96f43,
     type: 3}
+  enemyBPrefab: {fileID: 8867802335298161314, guid: d8cecde67f5144c87a866651f4a54903,
+    type: 3}
   itemCoinPrefab: {fileID: 5442191675320551044, guid: 161e95f46f19a4bf19926d2cc6f01ea7,
     type: 3}
   itemPowerPrefab: {fileID: 5168669295575442126, guid: 833b488fa4f3841019362df4de691a81,
@@ -3418,6 +3420,10 @@ MonoBehaviour:
   bulletEnemyAPrefab: {fileID: 7099759938085133270, guid: 44ed30e17ba4840329124dde02d23274,
     type: 3}
   bulletEnemyBPrefab: {fileID: 7099759938085133270, guid: cbbd1e55fb4d54ffbad88fa16e06bdb4,
+    type: 3}
+  bulletBossAPrefab: {fileID: 7099759938085133270, guid: cf870ecebb2374cd5aef0ed7933fff29,
+    type: 3}
+  bulletBossBPrefab: {fileID: 7099759938085133270, guid: 10528a44cfe804aa09d7f40d4858e4f2,
     type: 3}
   bulletFollowerPrefab: {fileID: 1380340362637897601, guid: efa9f46f28c94444fbc2ca9c8d458f45,
     type: 3}

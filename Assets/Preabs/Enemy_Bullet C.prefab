@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5473642497715874429}
   - component: {fileID: 3921323928389256237}
-  - component: {fileID: 8186146367697976568}
   - component: {fileID: 717034557165726485}
   - component: {fileID: -4770199739391625513}
+  - component: {fileID: 1484604062011592976}
   m_Layer: 0
-  m_Name: Enemy_Bullet A
+  m_Name: Enemy_Bullet C
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,11 +73,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -7779215486825634471, guid: 6f0f00290b61d46108c9b7a272df79f4,
+  m_Sprite: {fileID: 7431529995326980795, guid: 6f0f00290b61d46108c9b7a272df79f4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 0.04, y: 0.07}
   m_AdaptiveModeThreshold: 0.5
@@ -85,32 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8186146367697976568
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099759938085133270}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.33333334}
-    newSize: {x: 0.04, y: 0.07}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.25}
-  m_EdgeRadius: 0
 --- !u!50 &717034557165726485
 Rigidbody2D:
   serializedVersion: 4
@@ -145,4 +119,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 0
-  isRotate: 1
+--- !u!61 &1484604062011592976
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099759938085133270}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.25, y: 0.375}
+    newSize: {x: 0.04, y: 0.07}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.22, y: 0.35}
+  m_EdgeRadius: 0
