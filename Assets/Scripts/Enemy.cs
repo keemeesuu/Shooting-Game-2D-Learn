@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public GameObject itemBoom;
     public GameObject player;
     public ObjectManager objectManager;
+    public GameManager gameManager;
 
     SpriteRenderer spriteRenderer;
     Rigidbody2D rigid;
@@ -268,11 +269,12 @@ public class Enemy : MonoBehaviour
             Player palyerLogic = player.GetComponent<Player>();
             palyerLogic.score += enemyScore;
 
+            
             // #.Random Ratio Item Drop
             int ran = enemyName == "B" ? 0 : Random.Range(0, 10);
 
             if(ran < 3){
-                Debug.Log("Not Item");
+                // Debug.Log("Not Item");
             }else if(ran < 6){  // Coin 30%
                 GameObject itemCoin = objectManager.MakeObj("ItemCoin");
                 itemCoin.transform.position = transform.position;
@@ -287,6 +289,9 @@ public class Enemy : MonoBehaviour
             // Destroy(gameObject);
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
+
+            // Debug.Log("[Enemy.cs]transform.position" + transform.position + " enemyName: " + enemyName);
+            gameManager.CallExplosion(transform.position, enemyName);
         }
     }
 

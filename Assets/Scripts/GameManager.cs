@@ -107,11 +107,13 @@ public class GameManager : MonoBehaviour
         GameObject enemy = objectManager.MakeObj(enemyObjs[enemyIndex]);
         enemy.transform.position = spawnPoints[enemyPoint].position;
 
-
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic = enemy.GetComponent<Enemy>();
         enemyLogic.player = player;
         enemyLogic.objectManager = objectManager;
+
+        // 에너미에 게임오브젝트를 넘긴다.
+        enemyLogic.gameManager = this;
 
         if(enemyPoint == 5 || enemyPoint == 6){ //#.Right Spawn
             // enemy.transform.Rotate(Vector3.back * 90);
@@ -169,8 +171,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-
-
     public void RespawnPlayer(){
         Invoke("RespawnPlayerExe", 2f);
     }
@@ -181,6 +181,18 @@ public class GameManager : MonoBehaviour
 
         Player playerLogic = player.GetComponent<Player>();
         playerLogic.isHit = false;
+    }
+
+    public void CallExplosion(Vector3 pos, string type){
+        // GameManager에서 생성한 폭발 함수를 플레이어, 적에서 호출 할수 있게함
+
+        Debug.Log("CallExplosion()");
+
+        GameObject explosion = objectManager.MakeObj("Explosion");
+        Explosion explosionLogic = explosion.GetComponent<Explosion>();
+
+        explosion.transform.position = pos;
+        explosionLogic.StartExplosion(type);
     }
 
     public void GameOver(){

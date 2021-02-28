@@ -22,6 +22,8 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletBossBPrefab;
     public GameObject bulletFollowerPrefab;
 
+    public GameObject explosionPrefab;
+
     // 프리펩을 생성하여 저장할 배열 변수 생성
     GameObject[] enemyL;
     GameObject[] enemyM;
@@ -39,6 +41,8 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletBossA;
     GameObject[] bulletBossB;
     GameObject[] bulletFollower;
+    GameObject[] explosion;
+
 
     GameObject[] targetPool;
 
@@ -64,6 +68,8 @@ public class ObjectManager : MonoBehaviour
         bulletBossA = new GameObject[50];
         bulletBossB = new GameObject[1000];
         bulletFollower = new GameObject[100];
+
+        explosion = new GameObject[100];
 
         Generate();
     }
@@ -131,6 +137,13 @@ public class ObjectManager : MonoBehaviour
             bulletFollower[i] = Instantiate(bulletFollowerPrefab);
             bulletFollower[i].SetActive(false);
         }
+
+        // #4.폭발
+        for(int i=0; i<explosion.Length; i++){
+            explosion[i] = Instantiate(explosionPrefab);
+            explosion[i].SetActive(false);
+        }
+
         
     }
 
@@ -179,6 +192,9 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "BulletFollower":
                 targetPool = bulletFollower;
+                break;
+            case "Explosion":
+                targetPool = explosion;
                 break;
         }
 
