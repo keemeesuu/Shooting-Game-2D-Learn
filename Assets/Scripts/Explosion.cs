@@ -25,7 +25,6 @@ public class Explosion : MonoBehaviour
     // 폭발 오브젝트
     public void StartExplosion(string target)
     {
-        Debug.Log("StartExplosion");
         
         anim.SetTrigger("OnExplosion");
 

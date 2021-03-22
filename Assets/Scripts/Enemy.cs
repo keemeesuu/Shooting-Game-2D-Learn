@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
                 hp = 1;
                 break;
             case "B":
-                hp = 1000;
+                hp = 100;
                 Invoke("Stop", 2);
                 break;
         }
@@ -71,6 +71,8 @@ public class Enemy : MonoBehaviour
     }
 
     void Think(){
+        if (hp <= 0) return; 
+
         patternIndex = patternIndex == 3 ? 0 : patternIndex + 1;
         curPatternCount = 0;
 
@@ -292,6 +294,14 @@ public class Enemy : MonoBehaviour
 
             // Debug.Log("[Enemy.cs]transform.position" + transform.position + " enemyName: " + enemyName);
             gameManager.CallExplosion(transform.position, enemyName);
+
+
+            // #.Boss Kill
+            if(enemyName == "B"){
+                gameManager.StageEnd();
+
+                CancelInvoke();
+            }
         }
     }
 

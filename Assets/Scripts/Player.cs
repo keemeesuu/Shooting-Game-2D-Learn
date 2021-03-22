@@ -32,6 +32,11 @@ public class Player : MonoBehaviour
     public GameObject[] followers;
     public bool isRespawnTime;
 
+    public bool[] joyControl;
+    public bool isControl;
+    public bool isButtonA;
+    public bool isButtonB;
+
     Animator anim;
     SpriteRenderer spriteRenderer;
     
@@ -71,16 +76,43 @@ public class Player : MonoBehaviour
         Reload();
     }
 
+    public void JoyPanel(int type){
+        // 조이스틱 구현
+        for(int i=0; i<9; i++){
+            joyControl[i] = i == type;
+        }
+    }
+
+    public void JoyDown(){
+        isControl = true;
+    }
+
+    public void JoyUp(){
+        isControl = false;
+    }
+
     private void Move(){
 
+        // #.Keyboard Control Value
         float h = Input.GetAxisRaw("Horizontal");
-        // Border Limit
-        if((isTouchLeft && h == -1) || (isTouchRight && h == 1)){
+        float v = Input.GetAxisRaw("Vertical");
+
+        // #.Joy Control Value
+        if(joyControl[0]){ h = -1; v = 1; }
+        if(joyControl[1]){ h = 0; v = 1; }
+        if(joyControl[2]){ h = 1; v = 1; }
+        if(joyControl[3]){ h = -1; v = 0; }
+        if(joyControl[4]){ h = 0; v = 0; }
+        if(joyControl[5]){ h = 1; v = 0; }
+        if(joyControl[6]){ h = -1; v = -1; }
+        if(joyControl[7]){ h = 0; v = -1; }
+        if(joyControl[8]){ h = 1; v = -1; }
+
+        // Border Limit + Only Joy Control Down 
+        if((isTouchLeft && h == -1) || (isTouchRight && h == 1) /*|| !isControl*/){
             h = 0;
         }
-        // Border Limit 
-        float v = Input.GetAxisRaw("Vertical");
-        if((isTouchBottom && v == -1) || (isTouchTop && v == 1)){
+        if((isTouchBottom && v == -1) || (isTouchTop && v == 1) /*|| !isControl*/){
             v = 0;
         }
 
@@ -99,10 +131,27 @@ public class Player : MonoBehaviour
 
     }
 
+
+    public void ButtonADown(){
+        isButtonA = true;
+    }
+
+    public void ButtonAUp(){
+        isButtonA = false;
+    }
+
+    public void ButtonBDown(){
+        isButtonA = true;
+    }
+
     void Fire(){
 
-        // if(Input.GetButton("Fire1"))
+        // if(!Input.GetButton("Fire1"))
             // return;
+
+        // #.Joy Control Button Check
+        if(!isButtonA)
+            return;
 
         if(curShotDelay < maxShotDelay)
             return;

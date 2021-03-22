@@ -7,6 +7,14 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public int stage;
+    public int maxStage;
+
+    public Animator stageAnim;
+    public Animator clearAnim;
+    public Animator fadeAnim;
+    public Transform PlayerPos;
+
     // public GameObject[] enemyObjs;
     public string[] enemyObjs;
     public Transform[] spawnPoints;
@@ -30,7 +38,48 @@ public class GameManager : MonoBehaviour
     void Awake(){
         spawnList = new List<Spawn>();
         enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL", "EnemyB" };
+        StageStart();
+    }
+
+    public void StageStart(){
+        Debug.Log("StageStart");
+
+        // #.Stage UI Load
+        stageAnim.SetTrigger("On");
+        stageAnim.GetComponent<Text>().text = "Stage " + stage + "\nStart";
+
+        // #.Enemy Spawn File Read 
         ReadSpawnFile();
+
+        // #.Fade In
+        fadeAnim.SetTrigger("In");
+
+    }
+    
+    public void StageEnd(){
+        Debug.Log("StageEnd");
+
+        // #.Clear UI Load
+        clearAnim.SetTrigger("On");
+        clearAnim.GetComponent<Text>().text = "Stage " + stage + "\nClear";
+
+        // #.Fade Out
+        fadeAnim.SetTrigger("Out");
+
+        // #.Player Repos
+        player.transform.position = PlayerPos.position;
+
+        // #.Stage Increament
+        stage++;
+        Debug.Log("stage : " + stage);
+        if(stage > maxStage){
+            // 구현된 스테이지를 넘기면 게임 오버로 재실행 하도록 흐름 설정
+            Invoke("GameOver", 6);
+        }else{
+            Debug.Log("StageStart");
+            Invoke("StageStart", 5);
+        }
+
     }
 
     void ReadSpawnFile(){
@@ -40,8 +89,10 @@ public class GameManager : MonoBehaviour
         spawnEnd = false;
 
         // #2.리스폰 파일 읽기
-        TextAsset textFile = Resources.Load("Stage 0") as TextAsset;
-            // Stage 0이 텍스트 파일이 아니면 NULL 처리를 한다.
+        // 스테이지 변수를 통한 적 배이 파일을 로드
+        Debug.Log("Stage " + stage);
+        TextAsset textFile = Resources.Load("Stage " + stage) as TextAsset;
+            // stage.ToString()을 써야하지만 묵시적 형변환으로 안써도 된다
         StringReader stringReader = new StringReader(textFile.text);
 
         while(stringReader != null){
@@ -155,7 +206,7 @@ public class GameManager : MonoBehaviour
         }
     }
     public void UpdateBoomIcon(int boom){
-        Debug.Log("count : " + boom); 
+        // Debug.Log("count : " + boom); 
         // boomImage[boom].color = new Color(1, 1, 1, 1);
 
         // #.UI Hp Init Disable
@@ -166,7 +217,7 @@ public class GameManager : MonoBehaviour
 
         // #.UI Hp Init Active
         for (int i = 0; i < boom; i++){
-            Debug.Log("i : " + i);
+            // Debug.Log("i : " + i);
             boomImage[i].color = new Color(1, 1, 1, 1);
         }
     }
@@ -186,7 +237,7 @@ public class GameManager : MonoBehaviour
     public void CallExplosion(Vector3 pos, string type){
         // GameManager에서 생성한 폭발 함수를 플레이어, 적에서 호출 할수 있게함
 
-        Debug.Log("CallExplosion()");
+        // Debug.Log("CallExplosion()");
 
         GameObject explosion = objectManager.MakeObj("Explosion");
         Explosion explosionLogic = explosion.GetComponent<Explosion>();
