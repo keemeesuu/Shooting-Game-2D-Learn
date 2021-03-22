@@ -1,5 +1,5 @@
 # Shooting-Game-2D
-Tutorial
+Tutorial.
 
 <br>
 
